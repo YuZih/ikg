@@ -1,5 +1,26 @@
 ---
 // https://docs.astro.build/en/recipes/i18n/#set-up-pages-for-each-language
+// <meta http-equiv="refresh" content="0;url=/en/" />
+
+Astro.redirect('/en')
+
+// import client from '../../tina/__generated__/client'
+// import HomePage from '../../tina/pages/HomePage.tsx'
+// import BaseHead from '../components/BaseHead.astro'
+// import Footer from '../components/Footer.astro'
+// import Header from '../components/Header.astro'
+// import config from '../content/config/config.json'
+// const data = await client.queries.page({ relativePath: 'home.mdx' })
 ---
 
-<meta http-equiv="refresh" content="0;url=/en/" />
+<!-- <!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={config.seo.title} description={config.seo.description} />
+	</head>
+	<body>
+		<Header />
+		<HomePage {...data} client:tina />
+		<Footer />
+	</body>
+</html> -->
