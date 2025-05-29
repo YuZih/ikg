@@ -6,8 +6,10 @@ export const PageCollection: Collection = {
   path: "src/content/page",
   format: "mdx",
   ui: {
-    router: ({ document }) => {
-      return `/${document._sys.filename}`;
+    router({ document }) {
+      const locale = document._sys.breadcrumbs[0];
+      const fileName = document._sys.breadcrumbs[1];
+      return `/${locale}/${fileName}`;
     },
   },
   fields: [
