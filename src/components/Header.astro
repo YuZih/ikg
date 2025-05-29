@@ -1,30 +1,52 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
-import config from "../content/config/config.json";
-import IconLink from "./react/IconLink";
+import config from '../content/config/config.json'
+import { localeCodeMap, locales } from '../i18n/ui'
+import HeaderLink from './HeaderLink.astro'
+import IconLink from './react/IconLink'
+
+const { currentLocale } = Astro
+const pathNameWithoutLocale = Astro.url.pathname.replace(
+	`/${currentLocale}`,
+	''
+)
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{config.seo.title}</a></h2>
+		<h2><a href={`/${currentLocale}`}>{config.seo.title}</a></h2>
+
 		<div class="internal-links">
 			{
-				config.nav.map((nav) => (
-					<HeaderLink href={nav.link}>{nav.title}</HeaderLink>
+				locales.map((locale) => (
+					<a href={`/${locale}${pathNameWithoutLocale}`}>
+						{localeCodeMap[locale as keyof typeof localeCodeMap]}
+					</a>
 				))
 			}
 		</div>
-		<div class="social-links">
+
+		<div class="internal-links">
+			<!-- @todo: 將 config.nav 調整為多國語系邏輯 -->
 			{
-				config?.contactLinks?.map((link) => {
-					return (
-						<IconLink {...link} />
-					);
-				})
+				config.nav.map((nav: any) => (
+					<HeaderLink href={`/${currentLocale}${nav.link}`}>
+						{nav.title}
+					</HeaderLink>
+				))
 			}
+		</div>
+		<div class="right-section">
+			<div class="social-links">
+				{
+					config?.contactLinks?.map((link: any) => {
+						return <IconLink {...link} />
+					})
+				}
+			</div>
 		</div>
 	</nav>
 </header>
+
 <style>
 	header {
 		margin: 0;
@@ -56,6 +78,27 @@ import IconLink from "./react/IconLink";
 		text-decoration: none;
 		border-bottom-color: var(--accent);
 	}
+	.right-section {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+	.language-switcher {
+		display: flex;
+		gap: 0.5rem;
+	}
+	.language-switcher a {
+		padding: 0.5em;
+		border-radius: 4px;
+		transition: background-color 0.2s;
+	}
+	.language-switcher a:hover {
+		background-color: rgba(var(--black), 5%);
+	}
+	.language-switcher a.active {
+		background-color: rgba(var(--accent), 10%);
+		border-bottom: none;
+	}
 	.social-links,
 	.social-links a {
 		display: flex;
@@ -63,6 +106,9 @@ import IconLink from "./react/IconLink";
 	@media (max-width: 720px) {
 		.social-links {
 			display: none;
+		}
+		.language-switcher {
+			margin-right: 1rem;
 		}
 	}
 </style>

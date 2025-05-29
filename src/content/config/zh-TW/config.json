@@ -1,20 +1,20 @@
 {
   "seo": {
-    "title": "Yuzu Blog | EN",
-    "description": "Welcome to my website!",
+    "title": "Yuzu Blog | 中文",
+    "description": "歡迎來到我的網站",
     "siteOwner": "Yuzu"
   },
   "nav": [
     {
-      "title": "Home",
+      "title": "首頁",
       "link": "/"
     },
     {
-      "title": "Blog",
+      "title": "部落格",
       "link": "/blog"
     },
     {
-      "title": "About Yuzu",
+      "title": "關於",
       "link": "/about"
     }
   ],
