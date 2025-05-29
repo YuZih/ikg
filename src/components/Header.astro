@@ -1,9 +1,11 @@
 ---
 import config from '../content/config/config.json'
 import { localeCodeMap, locales } from '../i18n/ui'
-import HeaderLink from './HeaderLink.astro'
+import { getLangFromUrl, useTranslations } from '../i18n/utils'
 import IconLink from './react/IconLink'
 
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 const { currentLocale } = Astro
 const pathNameWithoutLocale = Astro.url.pathname.replace(
 	`/${currentLocale}`,
@@ -27,13 +29,25 @@ const pathNameWithoutLocale = Astro.url.pathname.replace(
 
 		<div class="internal-links">
 			<!-- @todo: 將 config.nav 調整為多國語系邏輯 -->
-			{
+			<!-- {
 				config.nav.map((nav: any) => (
 					<HeaderLink href={`/${currentLocale}${nav.link}`}>
 						{nav.title}
 					</HeaderLink>
 				))
-			}
+			} -->
+
+			<ul class="internal-links">
+				<a href={`/${lang}/home/`}>
+					{t('nav.home')}
+				</a>
+				<a href={`/${lang}/blog/`}>
+					{t('nav.blog')}
+				</a>
+				<a href={`/${lang}/about/`}>
+					{t('nav.about')}
+				</a>
+			</ul>
 		</div>
 		<div class="right-section">
 			<div class="social-links">
