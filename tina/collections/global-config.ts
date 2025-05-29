@@ -41,7 +41,7 @@ export const GlobalConfigCollection: Collection = {
     },
     {
       name: "nav",
-      label: "Site Navigation Menu (Reorder, Add, Remove)",
+      label: "Site Navigation Menu",
       type: "object",
       list: true,
       ui: {

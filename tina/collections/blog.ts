@@ -1,5 +1,6 @@
 import type { Collection } from "tinacms";
 
+
 export const BlogCollection: Collection = {
 
   name: "blog",
@@ -8,7 +9,9 @@ export const BlogCollection: Collection = {
   format: "mdx",
   ui: {
     router({ document }) {
-      return `/blog/${document._sys.filename}`;
+      const locale = document._sys.breadcrumbs[0];
+      const fileName = document._sys.breadcrumbs[1];
+      return `/${locale}/blog/${fileName}`;
     },
   },
   fields: [

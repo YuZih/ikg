@@ -1,0 +1,98 @@
+---
+import BaseHead from '../../../components/BaseHead.astro'
+import Footer from '../../../components/Footer.astro'
+import Header from '../../../components/Header.astro'
+import config from '../../../content/config/config.json'
+import { getContentByLocale } from '../../../utils/content'
+import { locales } from '../../../i18n/ui'
+
+export async function getStaticPaths() {
+	const paths = locales.map((locale) => ({
+		params: { locale },
+		props: { locale },
+	}))
+	return paths
+}
+
+const { locale } = Astro.props
+const blogs = await getContentByLocale(locale, 'blog')
+---
+
+<!doctype html>
+<html lang={locale}>
+	<head>
+		<BaseHead title={config.seo.title} description={config.seo.description} />
+		<style>
+			main {
+				width: 960px;
+				margin: auto;
+			}
+			ul {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 2rem;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			ul li {
+				width: calc(50% - 1rem);
+			}
+			ul li:first-child {
+				width: 100%;
+				margin-bottom: 1rem;
+				text-align: center;
+			}
+			ul li img {
+				width: 100%;
+				border-radius: 12px;
+				margin-bottom: 0.5rem;
+			}
+			.title {
+				font-size: 1.5rem;
+				margin: 0;
+				color: rgb(var(--black));
+			}
+			.date {
+				margin: 0;
+				color: rgb(var(--gray));
+			}
+			ul li a:hover .title,
+			ul li a:hover .date {
+				color: rgb(var(--accent));
+			}
+			ul li a:hover img {
+				box-shadow: var(--box-shadow);
+			}
+			@media (max-width: 720px) {
+				ul li {
+					width: 100%;
+				}
+				.title {
+					font-size: 1.25rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<ul>
+					{
+						blogs.map((blog, index) => (
+							<li>
+								<a href={`/${locale}/blog/${blog._sys.filename}`}>
+									<img src={blog.heroImage} alt={blog.title} />
+									<h4 class="title">{blog.title}</h4>
+									<p class="date">{blog.pubDate}</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
